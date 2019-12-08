@@ -9,6 +9,8 @@ const uri = '/v3/payments/request';
 // set timestamp by uuid1
 let nonce = uuidv1();
 let orderId = 'Line-Pay-v2-test' + nonce;
+
+// set request body
 let body = {
   "amount": 7900,
   "currency": "TWD",
@@ -33,7 +35,7 @@ let body = {
   }
 }
 
-// encrypt body to authorization
+// encrypt body to authorization by secret key
 let message = process.env.SecretKey + uri + JSON.stringify(body) + nonce;
 let hmacString = CryptoJS.HmacSHA256(message, process.env.SecretKey);
 let authorization = CryptoJS.enc.Base64.stringify(hmacString);
